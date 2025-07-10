@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyle Zieher - Full-Stack Developer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 30%, #2c1810 70%, #1f1f1f 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Intro Animation */
+        .intro-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 30%, #2c1810 70%, #1f1f1f 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        
+        .intro-container.hidden {
+            opacity: 0;
+            transform: translateY(-100%);
+            pointer-events: none;
+        }
+        
+        .code-animation {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            color: #ff6b35;
+            text-align: left;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            min-height: 200px;
+        }
+        
+        .cursor {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .welcome-text {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .welcome-text.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            color: #a0a0a0;
+            text-align: center;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out 0.3s;
+        }
+        
+        .subtitle.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .enter-btn {
+            padding: 16px 45px;
+            background: linear-gradient(135deg, #ff6b35 0%, #f4511e 50%, #e64a19 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+        
+        .enter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 53, 0.4);
+            background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 50%, #f4511e 100%);
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Particles Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #ff6b35;
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        /* Main Content */
+        .main-content {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease-out;
+            min-height: 100vh;
+        }
+        
+        .main-content.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .header {
+            padding: 50px 0;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 107, 53, 0.1);
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #ff6b35 50%, transparent 100%);
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ff6b35 0%, #f4511e 50%, #ff8c42 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+        
+        .header .role {
+            font-size: 20px;
+            color: #b0b0b0;
+            margin-bottom: 35px;
+            font-weight: 400;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 35px;
+        }
+        
+        .nav-btn {
+            padding: 14px 32px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 30px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff6b35 0%, #f4511e 100%);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+        
+        .nav-btn:hover::before, .nav-btn.active::before {
+            left: 0;
+        }
+        
+        .nav-btn:hover, .nav-btn.active {
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.25);
+            border-color: rgba(255, 107, 53, 0.3);
+        }
+        
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        
+        .content-section {
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 45px;
+            margin-bottom: 35px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 107, 53, 0.3) 50%, transparent 100%);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            border-color: rgba(255, 107, 53, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 35px;
+            background: linear-gradient(135deg, #ff6b35 0%, #f4511e 50%, #ff8c42 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.01em;
+        }
+        
+        .job-item, .education-item, .project-item {
+            margin-bottom: 30px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border-left: 5px solid;
+            border-image: linear-gradient(180deg, #ff6b35 0%, #f4511e 50%, #ff8c42 100%) 1;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .job-item:hover, .education-item:hover, .project-item:hover {
+            transform: translateX(15px);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.1);
+        }
+        
+        .job-title, .degree, .project-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        
+        .company, .institution, .tech-stack {
+            color: #ff6b35;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .date {
+            color: #a0a0a0;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .description {
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+        
+        .description ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .description li {
+            margin-bottom: 8px;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .skill-category {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 28px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .skill-category:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.1);
+        }
+        
+        .skill-category h3 {
+            color: #ff6b35;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .skill-tag {
+            background: rgba(255, 107, 53, 0.15);
+            color: #ff8c42;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 107, 53, 0.25);
+            transition: all 0.3s ease;
+        }
+        
+        .skill-tag:hover {
+            background: rgba(255, 107, 53, 0.25);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.2);
+        }
+        
+        .anschreiben-content {
+            line-height: 1.8;
+            font-size: 16px;
+            color: #e0e0e0;
+            font-weight: 400;
+        }
+        
+        .anschreiben-content p {
+            margin-bottom: 24px;
+        }
+        
+        .anschreiben-content strong {
+            color: #ff6b35;
+        }
+        
+        .highlight-box {
+            background: rgba(255, 107, 53, 0.08);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #ff6b35 50%, transparent 100%);
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .contact-info {
+            text-align: center;
+            margin-top: 40px;
+            padding: 35px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .contact-info h3 {
+            color: #ff6b35;
+            margin-bottom: 25px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .contact-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            text-align: left;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 36px;
+            }
+            
+            .header .role {
+                font-size: 18px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .content-container {
+                padding: 40px 20px;
+            }
+            
+            .glass-card {
+                padding: 25px;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .code-animation {
+                font-size: 14px;
+            }
+            
+            .welcome-text {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Intro Animation -->
+    <div class="intro-container" id="intro">
+        <div class="code-animation" id="codeAnimation"></div>
+        <div class="welcome-text" id="welcomeText">Willkommen zu meiner Bewerbung</div>
+        <div class="subtitle" id="subtitle">Full-Stack-Entwickler mit Leidenschaft für Innovation</div>
+        <button class="enter-btn" id="enterBtn">Portfolio betreten</button>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <header class="header">
+            <h1>Kyle Zieher</h1>
+            <div class="role">Full-Stack-Entwickler, Java Spring Boot, Angular, Microservices</div>
+            <nav class="navigation">
+                <a href="#" class="nav-btn active" data-section="lebenslauf">Lebenslauf</a>
+                <a href="#" class="nav-btn" data-section="anschreiben">Anschreiben</a>
+                <a href="#" class="nav-btn" data-section="kontakt">Kontakt</a>
+            </nav>
+        </header>
+        
+        <div class="content-container">
+            <!-- Lebenslauf Section -->
+            <section class="content-section active" id="lebenslauf">
+                <div class="glass-card">
+                    <h2 class="section-title">Praktika</h2>
+
+                    <div class="job-item">
+                        <div class="job-title">Automotive Lighting</div>
+                        <div class="company">Reutlingen</div>
+                        <div class="date">2018</div>
+                    </div>
+
+                    <div class="job-item">
+                        <div class="job-title">Bosch</div>
+                        <div class="company">Stuttgart</div>
+                        <div class="date">2019</div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2 class="section-title">Abitur</h2>
+
+                    <div class="job-item">
+                        <div class="job-title">Gottlieb-Daimler-Schule</div>
+                        <div class="company">Sindelfingen</div>
+                        <div class="date">2019 - Jul 2022</div>
+                        <div class="description">
+                            <ul>
+                                <li>Schwerpunkt Informatik</li>
+                                <li>Erste richtige Kontaktpunkte mit Softwareentwicklung, Entwicklungsprozessen und Hardware</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2 class="section-title">Ferienjob</h2>
+
+                    <div class="job-item">
+                        <div class="job-title">Moog GmbH</div>
+                        <div class="company">Böblingen Hulb</div>
+                        <div class="date">Jul 2022 - Aug 2022</div>
+                        <div class="description">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="glass-card">
+                    <h2 class="section-title">Bachelor of Science</h2>
+            
+                    <div class="job-item">
+                        <div class="job-title">Promotive GmbH & DHBW Stuttgart</div>
+                        <div class="company">Böblingen / Stuttgart</div>
+                        <div class="date">Oktober 2022 - heute</div>
+                        <div class="description">
+                            <ul>
+                                <li><strong>Urlaubsplanungsservice:</strong> Vollständige Microservice-Entwicklung für den Urlaubsplanungsservice für ein Arbeitszeitprogramm.</li>
+                                <li><strong>Dashboard-Tool für Steuergeräte:</strong> Frontend-Entwicklung mit Angular und Backend-Integration. Teilweise Backend-Entwicklung.</li>
+                                <li><strong>Schema-Erstellungstool:</strong> Frontend-Entwicklung mit enger Zusammenarbeit im Gesamtprozess.</li>
+                                <li>Entwicklung von Microservice-Architekturen mit Java Spring Boot und Angular</li>
+                                <li>Agile Entwicklung nach Scrum-Methodik</li>
+                                <li>Arbeit mit Docker-Containern und CI/CD-Pipelines</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass-card">
+                    <h2 class="section-title">Technische Kenntnisse</h2>
+                    
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h3>Backend-Entwicklung</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Java</span>
+                                <span class="skill-tag">Spring Boot</span>
+                                <span class="skill-tag">REST APIs</span>
+                                <span class="skill-tag">Microservices</span>
+                                <span class="skill-tag">Unit Testing</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category">
+                            <h3>Frontend-Entwicklung</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Angular</span>
+                                <span class="skill-tag">TypeScript</span>
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">HTML5/CSS3</span>
+                                <span class="skill-tag">SCSS</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category">
+                            <h3>Tools & Technologien</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Docker</span>
+                                <span class="skill-tag">Git</span>
+                                <span class="skill-tag">CI/CD</span>
+                                <span class="skill-tag">Scrum</span>
+                                <span class="skill-tag">Unit Testing</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category">
+                            <h3>Datenbanken</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">MySQL</span>
+                                <span class="skill-tag">PostgreSQL</span>
+                                <span class="skill-tag">JPA/Hibernate</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3>Weitere Fähigkeiten / Grundlagen</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">C#</span>
+                                <span class="skill-tag">React, AdonisJS</span>
+                                <span class="skill-tag">BWL / Marketing</span>
+                                <span class="skill-tag">IT-Security</span>
+                                <span class="skill-tag">KI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass-card">
+                    <h2 class="section-title">Hochschulprojekte</h2>
+                    
+                    <div class="project-item">
+                        <div class="project-title">Digitaler Assistent</div>
+                        <div class="tech-stack">Python | Voice & Text Interface</div>
+                        <div class="description">
+                            Umfangreicher Assistent für Routenplanung und Kleidungsempfehlungen mit Voice- und Text-Interface.
+                        </div>
+                    </div>
+                    
+                    <div class="project-item">
+                        <div class="project-title">Kleinanzeigen-App</div>
+                        <div class="tech-stack">Web Application</div>
+                        <div class="description">
+                            Vollständige Web-Anwendung mit Benutzerregistrierung und Suchfunktion. Umgesetzt mit AdonisJS und SQLite.
+                        </div>
+                    </div>
+                    
+                    <div class="project-item">
+                        <div class="project-title">IoT-Bewässerungssystem</div>
+                        <div class="tech-stack">Python | IoT Hardware</div>
+                        <div class="description">
+                            Automatische Pflanzenbewässerung mit Sensoren und Webapp Steuerung.
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Anschreiben Section -->
+            <section class="content-section" id="anschreiben">
+                <div class="glass-card">
+                    <h2 class="section-title">Bewerbung als Senior Full-Stack-Entwickler</h2>
+                    <div class="anschreiben-content">
+                        <p><strong>Sehr geehrte Damen und Herren,</strong></p>
+                        
+                        <p>Ihre Stellenausschreibung hat mein Interesse sofort geweckt – nicht nur wegen der spannenden Aufgaben im Bereich Banken und Versicherungen, sondern auch wegen Ihrer erfrischend ehrlichen Aussage: <strong>"Nobody is perfect!"</strong> Diese Offenheit motiviert mich, mich trotz meines noch jungen Alters von 21 Jahren für diese Position zu bewerben.</p>
+                        
+                        <p>Als dualer Student der Informatik im 6. Semester bei der <strong>Promotive GmbH</strong> bringe ich bereits solide praktische Erfahrungen mit, die perfekt zu Ihren Anforderungen passen. Das Besondere: Ich arbeite täglich mit exakt denselben Technologien, die Sie bevorzugen – <strong>Java Spring Boot und Angular</strong>.</p>
+                        
+                        <div class="highlight-box">
+                            <h3 style="color: #ff6b35; margin-bottom: 15px;">Meine konkreten Erfahrungen:</h3>
+                            <p>In drei verschiedenen Microservice-Projekten bei Promotive habe ich bereits bewiesen, was ich kann: Ich entwickelte einen vollständigen <strong>Urlaubsplanungsservice</strong> für ein Arbeitszeitprogramm, wirkte an einem komplexen <strong>Dashboard-Tool für Steuergeräte</strong> mit indem ich teilweise für das Backend und maßgeblich für dessen Frontend-Integration zusändig war. Zusätzlich war ich maßgeblich an einem <strong>Schema-Erstellungstool</strong> zum erstellen koplexer Hardwarestrukturen und dessen mapping auf verwaltende Dashboards beteiligt.</p>
+                        </div>
+                        
+                        <p><strong>Was mich besonders reizt:</strong><br>
+                        Ihre individuellen Softwarelösungen im Dokumentenmanagement finde ich faszinierend. Die Kombination aus eigenen Entwicklungen und Standardsoftware führender Hersteller entspricht genau der Art von innovativer Arbeit, die mich begeistert.</p>
+                        
+                        <p><strong>Warum ich perfekt zu Levigo passe:</strong><br>
+                        Auch wenn mir die "Senior"-Erfahrung noch fehlt, bringe ich frischen Wind, aktuelle Kenntnisse und vor allem eine riesige Lernbereitschaft mit. Neben meiner beruflichen Erfahrung zeigen auch meine Universitätsprojekte meine Vielseitigkeit: Von einer eigenen Kleinanzeigen-App über einen umfangreichen digitalen Assistenten mit Voice- und Text-Interface bis hin zu IoT-Lösungen.</p>
+                        
+                        <p>Ich möchte gerne in einem persönlichen Gespräch zeigen, wie meine Begeisterung für die Full-Stack-Entwicklung und meine Motivation, gemeinsam zu lernen und zu wachsen, Ihr Team bereichern können.</p>
+                        
+                        <p><strong>Mit freundlichen Grüßen,<br>Kyle Zieher</strong></p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Kontakt Section -->
+            <section class="content-section" id="kontakt">
+                <div class="glass-card">
+                    <div class="contact-info">
+                        <h3>Kontaktdaten</h3>
+                        <div class="contact-details">
+                            <div>
+                                <strong>Adresse:</strong><br>
+                                Albert-Schweitzer-Straße 22/1<br>
+                                71093, Weil im Schönbuch
+                            </div>
+                            <div>
+                                <strong>Kontakt:</strong><br>
+                                📞 017641799609<br>
+                                ✉️ kyle.zieher@gmail.com
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <script>
+        // Particles Animation
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Code Animation
+        const codeLines = [
+            'class FullStackDeveloper {',
+            '  constructor() {',
+            '    this.name = "Kyle Zieher";',
+            '    this.age = 21;',
+            '    this.skills = [',
+            '      "Java Spring Boot",',
+            '      "Angular",',
+            '      "Microservices",',
+            '      "Docker",',
+            '      "Python"',
+            '    ];',
+            '    this.passion = "Innovation";',
+            '    this.motivation = "Hoch";',
+            '  }',
+            '',
+            '  applyToLevigo() {',
+            '    return "Ready to contribute!";',
+            '  }',
+            '}'
+        ];
+        
+        function typeCode() {
+            const codeElement = document.getElementById('codeAnimation');
+            let lineIndex = 0;
+            let charIndex = 0;
+            
+            function typeNextChar() {
+                if (lineIndex < codeLines.length) {
+                    const currentLine = codeLines[lineIndex];
+                    
+                    if (charIndex < currentLine.length) {
+                        codeElement.innerHTML += currentLine[charIndex];
+                        charIndex++;
+                        setTimeout(typeNextChar, 50);
+                    } else {
+                        codeElement.innerHTML += '<br>';
+                        lineIndex++;
+                        charIndex = 0;
+                        setTimeout(typeNextChar, 100);
+                    }
+                } else {
+                    codeElement.innerHTML += '<span class="cursor">|</span>';
+                    setTimeout(showWelcomeText, 1000);
+                }
+            }
+            
+            typeNextChar();
+        }
+        
+        function showWelcomeText() {
+            document.getElementById('welcomeText').classList.add('show');
+            setTimeout(() => {
+                document.getElementById('subtitle').classList.add('show');
+            }, 300);
+        }
+        
+        // Navigation
+        function initNavigation() {
+            const navBtns = document.querySelectorAll('.nav-btn');
+            const sections = document.querySelectorAll('.content-section');
+            
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Remove active classes
+                    navBtns.forEach(navBtn => navBtn.classList.remove('active'));
+                    sections.forEach(section => section.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+                    
+                    // Show corresponding section
+                    const targetSection = btn.getAttribute('data-section');
+                    document.getElementById(targetSection).classList.add('active');
+                });
+            });
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            typeCode();
+            initNavigation();
+            
+            // Enter button click
+            document.getElementById('enterBtn').addEventListener('click', function() {
+                document.getElementById('intro').classList.add('hidden');
+                setTimeout(() => {
+                    document.getElementById('mainContent').classList.add('show');
+                }, 500);
+            });
+            
+            // Auto-enter after animation completes
+            setTimeout(() => {
+                if (!document.getElementById('intro').classList.contains('hidden')) {
+                    document.getElementById('enterBtn').click();
+                }
+            }, 12000);
+        });
+    </script>
+</body>
+</html>
