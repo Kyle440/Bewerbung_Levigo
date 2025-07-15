@@ -105,7 +105,7 @@
             transition: all 0.3s ease;
             opacity: 0;
             transform: translateY(30px);
-            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+            /* animation: fadeInUp 0.8s ease-out 0.6s forwards; entfernt, Button erscheint via JS */
             box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
         }
         
@@ -511,7 +511,12 @@
                 font-size: 24px;
             }
         }
-    </style>
+    .enter-btn.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+</style>
 </head>
 <body>
     <!-- Particles Background -->
@@ -522,7 +527,7 @@
         <div class="code-animation" id="codeAnimation"></div>
         <div class="welcome-text" id="welcomeText">Willkommen zu meiner Bewerbung</div>
         <div class="subtitle" id="subtitle">Full-Stack-Entwickler mit Leidenschaft für Innovation</div>
-        <button class="enter-btn" id="enterBtn">Portfolio betreten</button>
+        <button class="enter-btn" id="enterBtn">Bewerbung ansehen</button>
     </div>
     
     <!-- Main Content -->
@@ -562,7 +567,7 @@
                     <div class="job-item">
                         <div class="job-title">Gottlieb-Daimler-Schule</div>
                         <div class="company">Sindelfingen</div>
-                        <div class="date">2019 - Jul 2022</div>
+                        <div class="date">2019 - Juli 2022</div>
                         <div class="description">
                             <ul>
                                 <li>Schwerpunkt Informatik</li>
@@ -577,8 +582,8 @@
 
                     <div class="job-item">
                         <div class="job-title">Moog GmbH</div>
-                        <div class="company">Böblingen Hulb</div>
-                        <div class="date">Jul 2022 - Aug 2022</div>
+                        <div class="company">Böblingen-Hulb</div>
+                        <div class="date">Juli 2022 - August 2022</div>
                         <div class="description">
                         </div>
                     </div>
@@ -593,13 +598,24 @@
                         <div class="company">Böblingen / Stuttgart</div>
                         <div class="date">Oktober 2022 - heute</div>
                         <div class="description">
+                            <h3>Firmentätigkeiten</h3>
                             <ul>
                                 <li><strong>Urlaubsplanungsservice:</strong> Vollständige Microservice-Entwicklung für den Urlaubsplanungsservice für ein Arbeitszeitprogramm.</li>
                                 <li><strong>Dashboard-Tool für Steuergeräte:</strong> Frontend-Entwicklung mit Angular und Backend-Integration. Teilweise Backend-Entwicklung.</li>
                                 <li><strong>Schema-Erstellungstool:</strong> Frontend-Entwicklung mit enger Zusammenarbeit im Gesamtprozess.</li>
+                            </ul>
+                            <h3>Generell</h3>
+                            <ul>
                                 <li>Entwicklung von Microservice-Architekturen mit Java Spring Boot und Angular</li>
                                 <li>Agile Entwicklung nach Scrum-Methodik</li>
                                 <li>Arbeit mit Docker-Containern und CI/CD-Pipelines</li>
+                            </ul>
+                            <h3>Bachelorarbeit</h3>
+                            <ul>
+                                <li>Derzeit schreibe ich meine Bachelorarbeit über das Thema "Einsatz von Künstlicher Intelligenz zur Optimierung der Personalgewinnung: Entwicklung und Bewertung mehrerer LLM Agents zur automatisierten Analyse und Bewertung von Bewerbungen."</li>
+                                <li>Dabei soll ein automatisierter, KI gestützter Workflow mit n8n entwickelt werden, um den Bewerbungsprozess zu automatisieren.</li>
+                                <li>Zusätzlich sollen verwendete KI Modelle auf ihren Bias geprüft werden.</li>
+                                <li>Dabei achte ich ebenso auf die DSGVO Konformitäten sodass das System in einem Unternehmen realisierbar ist.</li>
                             </ul>
                         </div>
                     </div>
@@ -701,17 +717,17 @@
                     <div class="anschreiben-content">
                         <p><strong>Sehr geehrte Damen und Herren,</strong></p>
                         
-                        <p>Ihre Stellenausschreibung hat mein Interesse sofort geweckt – nicht nur wegen der spannenden Aufgaben im Bereich Banken und Versicherungen, sondern auch wegen Ihrer erfrischend ehrlichen Aussage: <strong>"Nobody is perfect!"</strong> Diese Offenheit motiviert mich, mich trotz meines noch jungen Alters von 21 Jahren für diese Position zu bewerben.</p>
+                        <p>Ihre Stellenausschreibung hat mein Interesse sofort geweckt – nicht nur wegen der interessanten Aufgaben im Bereich Banken und Versicherungen, sondern auch wegen Ihrer ehrlichen Aussage: <strong>"Nobody is perfect!"</strong> Diese Offenheit motiviert mich, mich trotz meines noch jungen Alters von 21 Jahren für diese Position zu bewerben.</p>
                         
-                        <p>Als dualer Student der Informatik im 6. Semester bei der <strong>Promotive GmbH</strong> bringe ich bereits solide praktische Erfahrungen mit, die perfekt zu Ihren Anforderungen passen. Das Besondere: Ich arbeite täglich mit exakt denselben Technologien, die Sie bevorzugen – <strong>Java Spring Boot und Angular</strong>.</p>
+                        <p>Als dualer Student der Informatik im 6. Semester bei der <strong>Promotive GmbH</strong> bringe ich bereits solide praktische Erfahrungen mit, die wirklich <strong>perfekt</strong> zu Ihren Anforderungen passen. Das Besondere: Ich arbeite täglich mit exakt denselben Technologien, die Sie bevorzugen – <strong>Java Spring Boot und Angular</strong>.</p>
                         
                         <div class="highlight-box">
                             <h3 style="color: #ff6b35; margin-bottom: 15px;">Meine konkreten Erfahrungen:</h3>
-                            <p>In drei verschiedenen Microservice-Projekten bei Promotive habe ich bereits bewiesen, was ich kann: Ich entwickelte einen vollständigen <strong>Urlaubsplanungsservice</strong> für ein Arbeitszeitprogramm, wirkte an einem komplexen <strong>Dashboard-Tool für Steuergeräte</strong> mit indem ich teilweise für das Backend und maßgeblich für dessen Frontend-Integration zusändig war. Zusätzlich war ich maßgeblich an einem <strong>Schema-Erstellungstool</strong> zum erstellen koplexer Hardwarestrukturen und dessen mapping auf verwaltende Dashboards beteiligt.</p>
+                            <p>In drei verschiedenen Microservice-Projekten bei Promotive habe ich bereits bewiesen, was ich kann: Ich entwickelte einen vollständigen <strong>Urlaubsplanungsservice</strong> für ein Arbeitszeitprogramm, wirkte an einem komplexen <strong>Dashboard-Tool für Steuergeräte</strong> wobei ich teilweise für das Backend und maßgeblich für dessen Frontend-Integration zuständig war. Zusätzlich war ich Hauptverantwortlicher für das Frontend eines <strong>Schema-Erstellungstools</strong>, welches zum Erstellen komplexer Hardwarestrukturen und dessen mapping auf verwaltende Dashboards entwickelt werden sollte.</p>
                         </div>
                         
                         <p><strong>Was mich besonders reizt:</strong><br>
-                        Ihre individuellen Softwarelösungen im Dokumentenmanagement finde ich faszinierend. Die Kombination aus eigenen Entwicklungen und Standardsoftware führender Hersteller entspricht genau der Art von innovativer Arbeit, die mich begeistert.</p>
+                        Ihre individuellen Softwarelösungen im Dokumentenmanagement finde ich sehr interessant. Die Kombination aus eigenen Entwicklungen und Standardsoftware führender Hersteller entspricht genau der Art von innovativer Arbeit, die mich begeistert.</p>
                         
                         <p><strong>Warum ich perfekt zu Levigo passe:</strong><br>
                         Auch wenn mir die "Senior"-Erfahrung noch fehlt, bringe ich frischen Wind, aktuelle Kenntnisse und vor allem eine riesige Lernbereitschaft mit. Neben meiner beruflichen Erfahrung zeigen auch meine Universitätsprojekte meine Vielseitigkeit: Von einer eigenen Kleinanzeigen-App über einen umfangreichen digitalen Assistenten mit Voice- und Text-Interface bis hin zu IoT-Lösungen.</p>
@@ -772,10 +788,7 @@
             '      "Java Spring Boot",',
             '      "Angular",',
             '      "Microservices",',
-            '      "Docker",',
-            '      "Python"',
             '    ];',
-            '    this.passion = "Innovation";',
             '    this.motivation = "Hoch";',
             '  }',
             '',
@@ -817,7 +830,9 @@
             document.getElementById('welcomeText').classList.add('show');
             setTimeout(() => {
                 document.getElementById('subtitle').classList.add('show');
-            }, 300);
+                // Button sichtbar nach Animation
+                document.getElementById('enterBtn').classList.add('show');
+            }, 500);
         }
         
         // Navigation
@@ -862,7 +877,7 @@
                 if (!document.getElementById('intro').classList.contains('hidden')) {
                     document.getElementById('enterBtn').click();
                 }
-            }, 12000);
+            }, 120000000);
         });
     </script>
 </body>
